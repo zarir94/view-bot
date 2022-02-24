@@ -1,5 +1,5 @@
 from requests.exceptions import ConnectionError, ConnectTimeout
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 from requests.structures import CaseInsensitiveDict
 from validators import url as validate_url
 from fake_useragent import UserAgent
@@ -113,6 +113,9 @@ def getwork(threadid):
 	amount=thread.amount
 	return jsonify({'id':threadid, 'percent':percent, 'views':views, 'running':running, 'done':done, 'url':url, 'amount':amount})
 
+@app.route('/favicon.ico', methods=['GET', 'POST'])
+def favicon():
+	return redirect(url_for('static', filename='favicon.ico'))
 
 @app.errorhandler(404)
 def page_not_found(e):
