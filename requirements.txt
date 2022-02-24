@@ -1,0 +1,5 @@
+fake-useragent==0.1.11
+Flask==2.0.3
+requests==2.27.1
+urllib3==1.26.8
+validators==0.18.2

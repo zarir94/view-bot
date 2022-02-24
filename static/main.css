@@ -1,0 +1,40 @@
+.disable-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+*:not(input), .btn {
+    box-shadow: none!important;
+}
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+.column {
+    float: left;
+    width: 50%;
+}
+.copyright:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+@media only screen and (max-width: 991px) {
+    .column {
+        width: 100%!important;
+        text-align: left;
+    }
+    .column:nth-of-type(1) {
+        display: none;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .card {
+        width: 500px!important;
+    }
+}

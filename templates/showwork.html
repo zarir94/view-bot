@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Thread{% endblock %}
+{% block content %}
+<h2 class="text-center">Thread Status</h2>
+<div style="width: auto;height: 20px"></div>
+<div align="center">
+	<div class="card">
+		<div class="card-body table-responsive">
+			<table class="table table-borderless">
+			  <tbody>
+			    <tr>
+			      <td>ID :</td>
+			      <td id="idno"></td>
+			    </tr>
+			    <tr>
+			      <td>Views Sent :</td>
+			      <td id="views"></td>
+			    </tr>
+			    <tr>
+			      <td>Progress :</td>
+			      <td id="percent"></td>
+			    </tr>
+			    <tr>
+			      <td>Running :</td>
+			      <td id="isrunning"></td>
+			    </tr>
+			    <tr>
+			      <td>Completed :</td>
+			      <td id="isdone"></td>
+			    </tr>
+			    <tr>
+			      <td>Amount :</td>
+			      <td id="amount"></td>
+			    </tr>
+			  </tbody>
+			</table>
+			<div class="progress">
+			  <div class="progress-bar progress-bar-striped progress-bar-animated" id="threadprogress" style="width: 0%"></div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block footer %}
+<script type="text/javascript">
+	var repeat=setInterval(()=>{updateworkinfo({{threadid}}, repeat)}, 1000)
+</script>
+{% endblock %}

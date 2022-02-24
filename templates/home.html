@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h2 class="text-center">Send views to your blog</h2>
+<div style="width: auto;height: 20px"></div>
+<div align="center">
+	<div class="card">
+		<div class="card-body">
+			<form method="POST" onsubmit="return false">
+				<div class="form-floating mb-3">
+				  <input type="url" class="form-control" id="inputurl" required="" placeholder="none">
+				  <label for="inputurl">Website URL</label>
+				</div>
+				<div class="form-floating">
+				  <input type="number" class="form-control" id="inputamount" required="" placeholder="none">
+				  <label for="inputamount">Views amount</label>
+				</div>
+				<div style="height: 20px;"></div>
+				<div align="center"><input type="submit" id="submitwork" class="btn btn-primary" value="Submit"></div>
+			</form>
+		</div>
+</div>
+</div>
+{% endblock %}
+{% block footer %}
+<script type="text/javascript">
+	submitworkfunc()
+</script>
+{% endblock %}
