@@ -90,14 +90,17 @@ def addwork():
 
 @url.route('/work/<thid>', methods=['GET', 'POST'])
 def showwork(thid):
-	print(thid)
-	if not (thid in all_threads):
+	try:
+		all_threads[thid]
+	except:
 		return render_template('404.html'), 404
 	return render_template('showwork.html', threadid=thid)
 
 @url.route('/getwork/<thid>', methods=['POST'])
 def getwork(thid):
-	if not (thid in all_threads):
+	try:
+		all_threads[thid]
+	except:
 		return render_template('404.html'), 404
 	thread=all_threads[thid]
 	percent=thread.percent
