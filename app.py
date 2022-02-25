@@ -1,13 +1,16 @@
-from requests.exceptions import ConnectionError, ConnectTimeout
 from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
+from requests.exceptions import ConnectionError, ConnectTimeout
 from requests.structures import CaseInsensitiveDict
 from validators import url as validate_url
-from fake_useragent import UserAgent
 from urllib.parse import unquote
+from random import choice
 from requests import get
+from json import loads
 import threading
 
-ua = UserAgent()
+with open('static/useragent.json', 'r') as file:
+	all_useragent=loads(file.read())
+	file.close()
 
 app=Flask(__name__)
 app.config['SECRET_KEY']='iureyu48783d#8*#^37489xnhkc'
@@ -15,6 +18,10 @@ url=Blueprint('urls',__name__)
 
 threadid=10000
 all_threads={}
+
+def random_useragent():
+	randua=choice(all_useragent[choice(list(all_useragent))])
+	return randua
 
 def calc_percent(minimum, maximum, current):
 	return (((current - minimum) * 100) / (maximum - minimum))
@@ -42,7 +49,7 @@ class Views_Thread(threading.Thread):
 
 def send_view(url):
 	headers = CaseInsensitiveDict()
-	headers["User-Agent"] = ua.random
+	headers["User-Agent"] = random_useragent()
 	fetched=False
 	err=0
 	while not fetched:
