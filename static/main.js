@@ -103,6 +103,7 @@ function updateworkinfo(threadid, interval = null) {
                 var text = JSON.parse(xhr.responseText)
                 if (text['running'] == false) {
                     if (interval != null) {
+                        $('#threadprogress').removeClass('progress-bar-striped')
                         clearInterval(interval)
                     }
                 }
