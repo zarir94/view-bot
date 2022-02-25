@@ -88,16 +88,22 @@ def addwork():
 	all_threads[str(threadid)].start()
 	return jsonify({'success':True, 'message':'URL added to thread', 'category':'success', 'id':threadid})
 
-@url.route('/work/<thid>', methods=['GET', 'POST'])
-def showwork(thid):
+@url.route('/work', methods=['GET', 'POST'])
+def showwork():
+	thid=request.args.get('id')
+	if not thid:
+		return render_template('404.html'), 404		
 	try:
 		all_threads[thid]
 	except:
 		return render_template('404.html'), 404
 	return render_template('showwork.html', threadid=thid)
 
-@url.route('/getwork/<thid>', methods=['POST'])
-def getwork(thid):
+@url.route('/getwork', methods=['POST'])
+def getwork():
+	thid=request.form.get('id')
+	if not thid:
+		return render_template('404.html'), 404		
 	try:
 		all_threads[thid]
 	except:
