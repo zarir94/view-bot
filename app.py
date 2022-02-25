@@ -1,5 +1,5 @@
 from requests.exceptions import ConnectionError, ConnectTimeout
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
 from requests.structures import CaseInsensitiveDict
 from validators import url as validate_url
 from fake_useragent import UserAgent
@@ -10,6 +10,8 @@ import threading
 ua = UserAgent()
 
 app=Flask(__name__)
+app.config['SECRET_KEY']='iureyu48783d#8*#^37489xnhkc'
+url=Blueprint('urls',__name__)
 
 threadid=10000
 all_threads={}
@@ -57,11 +59,11 @@ def send_view(url):
 			continue
 	return resp
 
-@app.route('/', methods=['GET', 'POST'])
+@url.route('/', methods=['GET', 'POST'])
 def home():
 	return render_template('home.html')
 
-@app.route('/add', methods=['POST'])
+@url.route('/add', methods=['POST'])
 def addwork():
 	global all_threads
 	global threadid
@@ -86,7 +88,7 @@ def addwork():
 	all_threads[threadid].start()
 	return jsonify({'success':True, 'message':'URL added to thread', 'category':'success', 'id':threadid})
 
-@app.route('/work/<threadid>', methods=['GET', 'POST'])
+@url.route('/work/<threadid>', methods=['GET', 'POST'])
 def showwork(threadid):
 	try:
 		threadid=int(threadid)
@@ -96,7 +98,7 @@ def showwork(threadid):
 		return render_template('404.html'), 404
 	return render_template('showwork.html', threadid=threadid)
 
-@app.route('/getwork/<threadid>', methods=['POST'])
+@url.route('/getwork/<threadid>', methods=['POST'])
 def getwork(threadid):
 	try:
 		threadid=int(threadid)
@@ -113,13 +115,16 @@ def getwork(threadid):
 	amount=thread.amount
 	return jsonify({'id':threadid, 'percent':percent, 'views':views, 'running':running, 'done':done, 'url':url, 'amount':amount})
 
-@app.route('/favicon.ico', methods=['GET', 'POST'])
+@url.route('/favicon.ico', methods=['GET', 'POST'])
 def favicon():
 	return redirect(url_for('static', filename='favicon.ico'))
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+
+app.register_blueprint(url,url_prefix='/')
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=80, debug=False)
