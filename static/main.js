@@ -73,7 +73,7 @@ function submitworkfunc() {
                         submitbtn.removeAttribute('disabled')
                         showalert(text['message'], text['category'])
                         setTimeout(() => {
-                            window.location.href = host + `/work/${text['id']}`
+                            window.location.href = host + `/work?id=${text['id']}`
                         }, 1000)
                     } else {
                         submitbtn.removeAttribute('disabled')
@@ -92,10 +92,10 @@ function submitworkfunc() {
 
 function updateworkinfo(threadid, interval = null) {
     var host = window.location.protocol + "//" + window.location.host;
-    var url = host + `/getwork/${threadid}`;
+    var url = host + `/getwork`;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
-    // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             var status = xhr.status
@@ -130,5 +130,6 @@ function updateworkinfo(threadid, interval = null) {
             }
         }
     };
-    xhr.send();
+    var data = `id=${threadid}`
+    xhr.send(data);
 }
