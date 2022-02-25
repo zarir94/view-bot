@@ -83,37 +83,30 @@ def addwork():
 	if maxamount<amount:
 		return jsonify({'success':False, 'message':f'Please Enter amount between 1-{maxamount}', 'category':'error'})
 	threadid+=1
-	all_threads[threadid]=Views_Thread(url, amount)
-	all_threads[threadid].setDaemon(True)
-	all_threads[threadid].start()
+	all_threads[str(threadid)]=Views_Thread(url, amount)
+	all_threads[str(threadid)].setDaemon(True)
+	all_threads[str(threadid)].start()
 	return jsonify({'success':True, 'message':'URL added to thread', 'category':'success', 'id':threadid})
 
-@url.route('/work/<threadid>', methods=['GET', 'POST'])
-def showwork(threadid):
-	try:
-		threadid=int(threadid)
-	except:
+@url.route('/work/<thid>', methods=['GET', 'POST'])
+def showwork(thid):
+	print(thid)
+	if not (thid in all_threads):
 		return render_template('404.html'), 404
-	if not (threadid in all_threads):
-		return render_template('404.html'), 404
-	return render_template('showwork.html', threadid=threadid)
+	return render_template('showwork.html', threadid=thid)
 
-@url.route('/getwork/<threadid>', methods=['POST'])
-def getwork(threadid):
-	try:
-		threadid=int(threadid)
-	except:
+@url.route('/getwork/<thid>', methods=['POST'])
+def getwork(thid):
+	if not (thid in all_threads):
 		return render_template('404.html'), 404
-	if not (threadid in all_threads):
-		return render_template('404.html'), 404
-	thread=all_threads[threadid]
+	thread=all_threads[thid]
 	percent=thread.percent
 	views=thread.views
 	running=thread.running
 	done=thread.done
 	url=thread.url
 	amount=thread.amount
-	return jsonify({'id':threadid, 'percent':percent, 'views':views, 'running':running, 'done':done, 'url':url, 'amount':amount})
+	return jsonify({'id':thid, 'percent':percent, 'views':views, 'running':running, 'done':done, 'url':url, 'amount':amount})
 
 @url.route('/favicon.ico', methods=['GET', 'POST'])
 def favicon():
