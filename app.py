@@ -77,7 +77,7 @@ def addwork():
 
 	url=unquote(request.form.get('url', '', str))
 	amount=request.form.get('amount', '', int)
-	maxamount=5000
+	maxamount=50000
 	if not validate_url(url)==True:
 		return jsonify({'success':False, 'message':'Invalid URL', 'category':'error'})
 	fetched=send_view(url)
