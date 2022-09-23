@@ -1,5 +1,5 @@
-Flask==2.0.3
-gunicorn==20.1.0
-requests==2.27.1
-urllib3==1.26.8
-validators==0.18.2
+Flask
+waitress
+requests
+urllib3
+validators
